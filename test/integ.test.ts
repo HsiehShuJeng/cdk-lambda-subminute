@@ -7,7 +7,7 @@ import * as cdk from '@aws-cdk/core';
 import { LambdaSubminute } from '../src';
 
 test('simple test', () => {
-  const outdir = path.join(__dirname, 'asset-outout');
+  const outdir = path.join(__dirname, '../asset-outout');
   if (!fs.existsSync(outdir)) {
     fs.mkdirSync(outdir);
   }

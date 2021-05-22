@@ -42,8 +42,8 @@ const project = new AwsCdkConstructLibrary({
   dependabot: true,
 
   gitignore: [
-    'asset-output/',
-    'cdk.out/',
+    'asset-output',
+    'cdk.out',
     '.cdk.staging/',
     // For Mavn GPG
     'public.pem',

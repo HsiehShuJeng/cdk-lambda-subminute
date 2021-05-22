@@ -31,7 +31,7 @@
 /lib
 /test-reports/
 __pycache__
-asset-output/
+asset-output
 build/Release
 cdk.out/
 coverage
