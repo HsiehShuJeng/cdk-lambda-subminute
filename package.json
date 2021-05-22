@@ -80,11 +80,12 @@
   },
   "bundledDependencies": [],
   "keywords": [
-    "apigateway",
+    "aws-cloudwatch-events",
+    "aws-lambda",
+    "aws-step-functions",
     "cdk",
     "projen",
-    "scott.hsieh",
-    "stepfunctions"
+    "scott.hsieh"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
