@@ -7,10 +7,7 @@ import * as cdk from '@aws-cdk/core';
 import { LambdaSubminute } from '../src';
 
 test('simple test', () => {
-  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined'? cdk.FileSystem.tmpdir : path.join(`${process.env.GITHUB_WORKSPACE}`, 'test');
-  if (!fs.existsSync(outdir)) {
-    fs.mkdirSync(outdir);
-  }
+  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined'? cdk.FileSystem.tmpdir : '/__w/_temp';
   const app = new cdk.App({ outdir: outdir });
   const stack = new cdk.Stack(app, 'TestStack');
   console.log(cdk.AssetStaging.BUNDLING_OUTPUT_DIR);
