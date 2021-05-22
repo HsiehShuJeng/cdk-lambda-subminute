@@ -42,9 +42,8 @@ const project = new AwsCdkConstructLibrary({
   dependabot: true,
 
   gitignore: [
-    'asset-output',
     'cdk.out',
-    '.cdk.staging/',
+    '.cdk.staging',
     // For Mavn GPG
     'public.pem',
     'private.pem',
@@ -94,4 +93,5 @@ const project = new AwsCdkConstructLibrary({
     packageId: 'Lambda.Subminute',
   },
 });
+
 project.synth();

@@ -74,11 +74,9 @@ class IteratorLambda extends cdk.Construct {
         TARGET_FN_NAME: props.targetFunction.functionName,
       },
       memorySize: 128,
-      assetHashType: cdk.AssetHashType.SOURCE, // see https://github.com/aws/aws-cdk/pull/12984
       role: iteratorLambdaRole,
       timeout: cdk.Duration.seconds(58), // 1 min
       tracing: Tracing.ACTIVE,
     });
-
   }
 }
