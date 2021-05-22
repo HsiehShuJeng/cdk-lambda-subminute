@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as iam from '@aws-cdk/aws-iam';
 
 import { IFunction, Runtime, Tracing } from '@aws-cdk/aws-lambda';
-import { PythonFunction } from '@aws-cdk/aws-lambda-python';
+import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { RetentionDays } from '@aws-cdk/aws-logs';
 import * as cdk from '@aws-cdk/core';
 
@@ -63,13 +63,13 @@ class IteratorLambda extends cdk.Construct {
       resources: [props.targetFunction.functionArn],
     }));
 
-    this.function = new PythonFunction(this, 'Iterator', {
+    this.function = new NodejsFunction(this, 'Iterator', {
       functionName: 'lambda-subminute-iterator',
       description: 'A function for breaking the limit of 1 minute with the CloudWatch Rules.',
       logRetention: RetentionDays.THREE_MONTHS,
-      runtime: Runtime.PYTHON_3_8,
-      entry: path.join(__dirname, 'resources/iterator'),
-      index: 'iterator_agent.py',
+      runtime: Runtime.NODEJS_14_X,
+      entry: path.join(__dirname, 'resources/iterator/iterator_agent.ts'),
+      handler: 'lambdaHandler',
       environment: {
         TARGET_FN_NAME: props.targetFunction.functionName,
       },

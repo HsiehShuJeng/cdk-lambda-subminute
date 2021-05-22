@@ -7,3 +7,5 @@ https://docs.aws.amazon.com/cdk/api/latest/docs/aws-s3-assets-readme.html#asset-
 https://github.com/aws/aws-cdk/issues/8589
 https://github.com/aws/aws-cdk/issues/14516
 https://github.com/aws/aws-cdk/issues/11914
+
+https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/core/lib/asset-staging.ts

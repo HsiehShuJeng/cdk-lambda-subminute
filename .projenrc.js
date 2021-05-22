@@ -20,7 +20,7 @@ const project = new AwsCdkConstructLibrary({
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-python',
+    '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-iam',
     '@aws-cdk/aws-stepfunctions',
@@ -93,5 +93,8 @@ const project = new AwsCdkConstructLibrary({
     packageId: 'Lambda.Subminute',
   },
 });
-
+project.eslint.addOverride({
+  files: ['*.ts'],
+  rules: { '@typescript-eslint/no-require-imports': 0 },
+});
 project.synth();

@@ -3,6 +3,18 @@
 exports[`simple test 1`] = `
 Object {
   "Parameters": Object {
+    "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576ArtifactHashEAE447ED": Object {
+      "Description": "Artifact hash for asset \\"34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576\\"",
+      "Type": "String",
+    },
+    "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576S3Bucket01BC4178": Object {
+      "Description": "S3 bucket for asset \\"34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576\\"",
+      "Type": "String",
+    },
+    "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576S3VersionKey0A067BC4": Object {
+      "Description": "S3 key for asset version \\"34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576\\"",
+      "Type": "String",
+    },
     "AssetParameters67b7823b74bc135986aa72f889d6a8da058d0c4a20cbc2dfc6f78995fdd2fc24ArtifactHashBA91B77F": Object {
       "Description": "Artifact hash for asset \\"67b7823b74bc135986aa72f889d6a8da058d0c4a20cbc2dfc6f78995fdd2fc24\\"",
       "Type": "String",
@@ -15,18 +27,6 @@ Object {
       "Description": "S3 key for asset version \\"67b7823b74bc135986aa72f889d6a8da058d0c4a20cbc2dfc6f78995fdd2fc24\\"",
       "Type": "String",
     },
-    "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9ArtifactHash2529C9E6": Object {
-      "Description": "Artifact hash for asset \\"a267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9\\"",
-      "Type": "String",
-    },
-    "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9S3Bucket15AB4424": Object {
-      "Description": "S3 bucket for asset \\"a267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9\\"",
-      "Type": "String",
-    },
-    "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9S3VersionKey398008F6": Object {
-      "Description": "S3 key for asset version \\"a267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9\\"",
-      "Type": "String",
-    },
   },
   "Resources": Object {
     "LambdaSubminuteIteratorLambdaIterator43007E8C": Object {
@@ -37,7 +37,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9S3Bucket15AB4424",
+            "Ref": "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576S3Bucket01BC4178",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -50,7 +50,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9S3VersionKey398008F6",
+                          "Ref": "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576S3VersionKey0A067BC4",
                         },
                       ],
                     },
@@ -63,7 +63,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParametersa267737655f9259595947e7448b80196c4da6e4042f73a8116b2d99bb46609f9S3VersionKey398008F6",
+                          "Ref": "AssetParameters34756f6e48dc0ed80dd99ceabea9b3b6fd4d1361c5aeecc32f25159c8d72a576S3VersionKey0A067BC4",
                         },
                       ],
                     },
@@ -76,13 +76,14 @@ Object {
         "Description": "A function for breaking the limit of 1 minute with the CloudWatch Rules.",
         "Environment": Object {
           "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "TARGET_FN_NAME": Object {
               "Ref": "targetFunctionFDF105E2",
             },
           },
         },
         "FunctionName": "lambda-subminute-iterator",
-        "Handler": "iterator_agent.handler",
+        "Handler": "index.lambdaHandler",
         "MemorySize": 128,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -90,7 +91,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "python3.8",
+        "Runtime": "nodejs14.x",
         "Timeout": 58,
         "TracingConfig": Object {
           "Mode": "Active",

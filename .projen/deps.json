@@ -109,7 +109,7 @@
       "type": "peer"
     },
     {
-      "name": "@aws-cdk/aws-lambda-python",
+      "name": "@aws-cdk/aws-lambda-nodejs",
       "version": "^1.105.0",
       "type": "peer"
     },
@@ -149,7 +149,7 @@
       "type": "runtime"
     },
     {
-      "name": "@aws-cdk/aws-lambda-python",
+      "name": "@aws-cdk/aws-lambda-nodejs",
       "version": "^1.105.0",
       "type": "runtime"
     },

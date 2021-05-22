@@ -7,7 +7,7 @@ import * as cdk from '@aws-cdk/core';
 import { LambdaSubminute } from '../src';
 
 test('simple test', () => {
-  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined'? cdk.FileSystem.tmpdir : '/__w/_temp';
+  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined' ? cdk.FileSystem.tmpdir : '/__w/_temp';
   const app = new cdk.App({ outdir: outdir });
   const stack = new cdk.Stack(app, 'TestStack');
   console.log(cdk.AssetStaging.BUNDLING_OUTPUT_DIR);
@@ -35,15 +35,17 @@ test('simple test', () => {
         TARGET_FN_NAME: {
           Ref: 'targetFunctionFDF105E2',
         },
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       },
     },
     FunctionName: 'lambda-subminute-iterator',
-    Handler: 'iterator_agent.handler',
+    Handler: 'index.lambdaHandler',
     MemorySize: 128,
-    Runtime: 'python3.8',
+    Runtime: 'nodejs14.x',
     Timeout: 58,
     TracingConfig: {
       Mode: 'Active',
     },
-  });
+  },
+  );
 });
