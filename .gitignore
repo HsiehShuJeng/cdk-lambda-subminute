@@ -10,6 +10,7 @@
 *.tgz
 *.tsbuildinfo
 .cache
+.cdk.staging/
 .classpath
 .classpath.txt
 .env
@@ -30,6 +31,7 @@
 /lib
 /test-reports/
 __pycache__
+asset-output/
 build/Release
 cdk.out/
 coverage
