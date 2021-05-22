@@ -11,14 +11,16 @@ const project = new AwsCdkConstructLibrary({
 
   cdkVersion: '1.105.0',
   defaultReleaseBranch: 'main',
-  name: 'projen-statemachine-example',
-  repositoryUrl: 'https://github.com/HsiehShuJeng/projen-simple.git',
-  projectName: 'projen-statemachine-example',
+  name: 'cdk-lambda-subminute',
+  repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
+  projectName: 'cdk-lambda-subminute',
   projectType: ProjectType.LIB,
   projenUpgradeAutoMerge: true,
 
   cdkDependencies: [
     '@aws-cdk/core',
+    '@aws-cdk/aws-events',
+    '@aws-cdk/aws-events-targets',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-logs',
