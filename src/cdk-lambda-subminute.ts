@@ -22,7 +22,7 @@ export interface LambdaSubminuteProps {
    *
    * @default cron(50/1 15-17 ? * * *) UTC+0 being run every minute starting from 15:00 PM to 17:00 PM.
    */
-  readonly conjobExpression?: string;
+  readonly cronjobExpression?: string;
   /**
    * How many times you intent to execute in a minute.
    *
@@ -60,7 +60,7 @@ export class LambdaSubminute extends cdk.Construct {
     this.stateMachineArn = subminuteStateMachine.stateMachine.stateMachineArn;
 
     const startRule = new events.Rule(this, 'StartSubminuteStateMachine', {
-      schedule: events.Schedule.expression(props.conjobExpression ?? 'cron(50/1 15-17 ? * * *)'),
+      schedule: events.Schedule.expression(props.cronjobExpression ?? 'cron(50/1 15-17 ? * * *)'),
       ruleName: 'subminute-statemachine-lambda-rule',
       description: `A rule to run the subminute state machine, i.e. ${subminuteStateMachine.stateMachine.stateMachineName}`,
     });
@@ -76,14 +76,14 @@ export class LambdaSubminute extends cdk.Construct {
   }
 }
 
-interface IteratorLambdaProps {
+export interface IteratorLambdaProps {
   /**
      * The Lambda function that is going to be executed per time unit less than one minute.
      */
-  targetFunction: IFunction;
+  readonly targetFunction: IFunction;
 }
 
-class IteratorLambda extends cdk.Construct {
+export class IteratorLambda extends cdk.Construct {
   /**
      * A Lambda function that plays the role of the iterator.
      */
@@ -130,34 +130,34 @@ class IteratorLambda extends cdk.Construct {
   }
 }
 
-interface SubminuteStateMachineProps {
+export interface SubminuteStateMachineProps {
   /**
    * the name of the state machine.
    */
-  stateMachineName: string;
+  readonly stateMachineName: string;
   /**
    * the Lambda function that executes your intention.
    */
-  targetFunction: IFunction;
+  readonly targetFunction: IFunction;
   /**
    * the iterator Lambda function for the target Lambda function.
    */
-  iteratorFunction: IFunction;
+  readonly iteratorFunction: IFunction;
   /**
    * Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute.
    *
    * @default 10
    */
-  intervalTime: number;
+  readonly intervalTime: number;
   /**
    * How many times you intent to execute in a minute.
    *
    * @default 6
    */
-  frequency: number;
+  readonly frequency: number;
 }
 
-class SubminuteStateMachine extends cdk.Construct {
+export class SubminuteStateMachine extends cdk.Construct {
   readonly stateMachine: sfn.StateMachine;
   constructor(scope: cdk.Construct, id: string, props: SubminuteStateMachineProps) {
     super(scope, id);

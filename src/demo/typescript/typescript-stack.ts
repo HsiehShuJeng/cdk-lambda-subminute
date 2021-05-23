@@ -14,8 +14,13 @@ class TypescriptStack extends cdk.Stack {
       runtime: Runtime.NODEJS_12_X,
       handler: 'index.handler',
     });
-    const cronJobExample = 'cron(50/1 15-17 ? * SUN-SAT *)';
-    const subminuteMaster = new LambdaSubminute(this, 'LambdaSubminute', { targetFunction: targetLabmda, conjobExpression: cronJobExample });
+    const cronJobExample = 'cron(50/1 3-4 ? * SUN-SAT *)';
+    const subminuteMaster = new LambdaSubminute(this, 'LambdaSubminute', {
+      targetFunction: targetLabmda,
+      cronjobExpression: cronJobExample,
+      frequency: 10,
+      intervalTime: 6,
+    });
 
     new cdk.CfnOutput(this, 'OStateMachineArn', { value: subminuteMaster.stateMachineArn });
     new cdk.CfnOutput(this, 'OIteratorFunctionArn', { value: subminuteMaster.iteratorFunction.functionArn });
