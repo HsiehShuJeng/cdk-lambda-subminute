@@ -3,7 +3,13 @@ const project = new AwsCdkConstructLibrary({
   author: 'scott.hsieh',
   authorName: 'Shu-Jeng Hsieh',
   authorAddress: 'https://fantasticsie.medium.com/',
-  keywords: ['stepfunctions', 'apigateway', 'projen', 'scott.hsieh'],
+  keywords: [
+    'aws-step-functions',
+    'aws-lambda', 'projen',
+    'aws-cloudwatch-events',
+    'serverless',
+    'scott.hsieh',
+  ],
 
   catalog: {
     twitter: 'fantasticHsieh',
@@ -11,16 +17,18 @@ const project = new AwsCdkConstructLibrary({
 
   cdkVersion: '1.105.0',
   defaultReleaseBranch: 'main',
-  name: 'projen-statemachine-example',
-  repositoryUrl: 'https://github.com/HsiehShuJeng/projen-simple.git',
-  projectName: 'projen-statemachine-example',
+  name: 'cdk-lambda-subminute',
+  repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
+  projectName: 'cdk-lambda-subminute',
   projectType: ProjectType.LIB,
   projenUpgradeAutoMerge: true,
 
   cdkDependencies: [
     '@aws-cdk/core',
+    '@aws-cdk/aws-events',
+    '@aws-cdk/aws-events-targets',
     '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-python',
+    '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-iam',
     '@aws-cdk/aws-stepfunctions',
@@ -42,7 +50,8 @@ const project = new AwsCdkConstructLibrary({
   dependabot: true,
 
   gitignore: [
-    'cdk.out/',
+    'cdk.out',
+    '.cdk.staging',
     // For Mavn GPG
     'public.pem',
     'private.pem',
@@ -91,5 +100,9 @@ const project = new AwsCdkConstructLibrary({
     dotNetNamespace: 'ScottHsieh.Cdk',
     packageId: 'Lambda.Subminute',
   },
+});
+project.eslint.addOverride({
+  files: ['*.ts'],
+  rules: { '@typescript-eslint/no-require-imports': 0 },
 });
 project.synth();

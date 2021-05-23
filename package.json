@@ -1,8 +1,8 @@
 {
-  "name": "projen-statemachine-example",
+  "name": "cdk-lambda-subminute",
   "repository": {
     "type": "git",
-    "url": "https://github.com/HsiehShuJeng/projen-simple.git"
+    "url": "https://github.com/HsiehShuJeng/cdk-lambda-subminute.git"
   },
   "scripts": {
     "clobber": "npx projen clobber",
@@ -56,9 +56,11 @@
     "typescript": "^4.2.4"
   },
   "peerDependencies": {
+    "@aws-cdk/aws-events": "^1.105.0",
+    "@aws-cdk/aws-events-targets": "^1.105.0",
     "@aws-cdk/aws-iam": "^1.105.0",
     "@aws-cdk/aws-lambda": "^1.105.0",
-    "@aws-cdk/aws-lambda-python": "^1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
     "@aws-cdk/aws-logs": "^1.105.0",
     "@aws-cdk/aws-stepfunctions": "^1.105.0",
     "@aws-cdk/aws-stepfunctions-tasks": "^1.105.0",
@@ -66,9 +68,11 @@
     "constructs": "^3.2.27"
   },
   "dependencies": {
+    "@aws-cdk/aws-events": "^1.105.0",
+    "@aws-cdk/aws-events-targets": "^1.105.0",
     "@aws-cdk/aws-iam": "^1.105.0",
     "@aws-cdk/aws-lambda": "^1.105.0",
-    "@aws-cdk/aws-lambda-python": "^1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
     "@aws-cdk/aws-logs": "^1.105.0",
     "@aws-cdk/aws-stepfunctions": "^1.105.0",
     "@aws-cdk/aws-stepfunctions-tasks": "^1.105.0",
@@ -76,11 +80,13 @@
   },
   "bundledDependencies": [],
   "keywords": [
-    "apigateway",
+    "aws-cloudwatch-events",
+    "aws-lambda",
+    "aws-step-functions",
     "cdk",
     "projen",
     "scott.hsieh",
-    "stepfunctions"
+    "serverless"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",

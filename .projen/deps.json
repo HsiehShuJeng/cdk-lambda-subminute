@@ -104,12 +104,22 @@
       "type": "build"
     },
     {
+      "name": "@aws-cdk/aws-events-targets",
+      "version": "^1.105.0",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-events",
+      "version": "^1.105.0",
+      "type": "peer"
+    },
+    {
       "name": "@aws-cdk/aws-iam",
       "version": "^1.105.0",
       "type": "peer"
     },
     {
-      "name": "@aws-cdk/aws-lambda-python",
+      "name": "@aws-cdk/aws-lambda-nodejs",
       "version": "^1.105.0",
       "type": "peer"
     },
@@ -144,12 +154,22 @@
       "type": "peer"
     },
     {
+      "name": "@aws-cdk/aws-events-targets",
+      "version": "^1.105.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-events",
+      "version": "^1.105.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-iam",
       "version": "^1.105.0",
       "type": "runtime"
     },
     {
-      "name": "@aws-cdk/aws-lambda-python",
+      "name": "@aws-cdk/aws-lambda-nodejs",
       "version": "^1.105.0",
       "type": "runtime"
     },

@@ -10,6 +10,7 @@
 *.tgz
 *.tsbuildinfo
 .cache
+.cdk.staging
 .classpath
 .classpath.txt
 .env
@@ -31,7 +32,7 @@
 /test-reports/
 __pycache__
 build/Release
-cdk.out/
+cdk.out
 coverage
 jspm_packages/
 junit.xml

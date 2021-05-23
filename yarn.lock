@@ -180,6 +180,18 @@
     "@aws-cdk/core" "1.105.0"
     constructs "^3.3.69"
 
+"@aws-cdk/aws-codepipeline@1.105.0":
+  version "1.105.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-codepipeline/-/aws-codepipeline-1.105.0.tgz#5a23b38092331f2bc1685df686a5b04d5357aef9"
+  integrity sha512-30k2sPaxW18tLOfuKU5mYo26OVZgmklvK8E9EPdrjVXg13wdeDxMgnBlYnezNjxO1zvoLpVbar+kaNv805xNOg==
+  dependencies:
+    "@aws-cdk/aws-events" "1.105.0"
+    "@aws-cdk/aws-iam" "1.105.0"
+    "@aws-cdk/aws-kms" "1.105.0"
+    "@aws-cdk/aws-s3" "1.105.0"
+    "@aws-cdk/core" "1.105.0"
+    constructs "^3.3.69"
+
 "@aws-cdk/aws-cognito@1.105.0":
   version "1.105.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cognito/-/aws-cognito-1.105.0.tgz#978fecb686e28696f7078e177a64f6fbc2af5221"
@@ -337,7 +349,32 @@
     "@aws-cdk/region-info" "1.105.0"
     constructs "^3.3.69"
 
-"@aws-cdk/aws-events@1.105.0":
+"@aws-cdk/aws-events-targets@^1.105.0":
+  version "1.105.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-events-targets/-/aws-events-targets-1.105.0.tgz#33d701482a2002f9f7806361c2b201a2c5225866"
+  integrity sha512-Y3BrzDumPqmx29MJTp39+4jweOVq7uaBZIyCUEXfm8alJ/XCQ2WoJWn/yd3oCNdUR0MT24JXGB0NtcaGy6Ehvw==
+  dependencies:
+    "@aws-cdk/aws-apigateway" "1.105.0"
+    "@aws-cdk/aws-codebuild" "1.105.0"
+    "@aws-cdk/aws-codepipeline" "1.105.0"
+    "@aws-cdk/aws-ec2" "1.105.0"
+    "@aws-cdk/aws-ecs" "1.105.0"
+    "@aws-cdk/aws-events" "1.105.0"
+    "@aws-cdk/aws-iam" "1.105.0"
+    "@aws-cdk/aws-kinesis" "1.105.0"
+    "@aws-cdk/aws-kinesisfirehose" "1.105.0"
+    "@aws-cdk/aws-kms" "1.105.0"
+    "@aws-cdk/aws-lambda" "1.105.0"
+    "@aws-cdk/aws-logs" "1.105.0"
+    "@aws-cdk/aws-sns" "1.105.0"
+    "@aws-cdk/aws-sns-subscriptions" "1.105.0"
+    "@aws-cdk/aws-sqs" "1.105.0"
+    "@aws-cdk/aws-stepfunctions" "1.105.0"
+    "@aws-cdk/core" "1.105.0"
+    "@aws-cdk/custom-resources" "1.105.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-events@1.105.0", "@aws-cdk/aws-events@^1.105.0":
   version "1.105.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-events/-/aws-events-1.105.0.tgz#4d4a964fc41d4457293c54ab8048f1ddc4d59bf2"
   integrity sha512-HlBUnEphoTPt1KRcWxmc4orNMY+jU3s/AlndsUx0uzSQMfOCqfPVY2wPtglaWetCJ7zybnuho15k8dhf1aRK6A==
@@ -365,6 +402,26 @@
     "@aws-cdk/region-info" "1.105.0"
     constructs "^3.3.69"
 
+"@aws-cdk/aws-kinesis@1.105.0":
+  version "1.105.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-kinesis/-/aws-kinesis-1.105.0.tgz#0ae5457834f4a0299a9bb8cd4b3664f43e00c308"
+  integrity sha512-i+ghBPhRJXUChY7gy3AusFD+xcynZYOzdsCIzN/lYb26hrQLQukhCgdJS0wkHIGLuGLa0rmpnz3IOuhW/aMAmg==
+  dependencies:
+    "@aws-cdk/aws-cloudwatch" "1.105.0"
+    "@aws-cdk/aws-iam" "1.105.0"
+    "@aws-cdk/aws-kms" "1.105.0"
+    "@aws-cdk/aws-logs" "1.105.0"
+    "@aws-cdk/core" "1.105.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-kinesisfirehose@1.105.0":
+  version "1.105.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-kinesisfirehose/-/aws-kinesisfirehose-1.105.0.tgz#860d79c51da1f81ff7851b20c687d01484e81173"
+  integrity sha512-H1282ILJcE2MXLL27iBImq2DoVVNhyebDG46nLb0hkDK/AMMWQE1D9OFw8lkKd7k1LzCfg3lDxnWSUp8No/iKA==
+  dependencies:
+    "@aws-cdk/core" "1.105.0"
+    constructs "^3.3.69"
+
 "@aws-cdk/aws-kms@1.105.0":
   version "1.105.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-kms/-/aws-kms-1.105.0.tgz#635189f24cff00d380ae25eb68134fe949e67b68"
@@ -375,12 +432,11 @@
     "@aws-cdk/cx-api" "1.105.0"
     constructs "^3.3.69"
 
-"@aws-cdk/aws-lambda-python@^1.105.0":
+"@aws-cdk/aws-lambda-nodejs@^1.105.0":
   version "1.105.0"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-python/-/aws-lambda-python-1.105.0.tgz#23cbb636b7d671f6387b3ab2bfd7c9242e484353"
-  integrity sha512-BVOOPq3bQHaxYqFLnRU9EY1RJGpM4k3qEBawEx4OWiCx2hMOovEgkbRfzCtvagyMPmjFyp4luAQDRb2W0gNYUw==
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-nodejs/-/aws-lambda-nodejs-1.105.0.tgz#dd76c97ea5d3c0316052ec5da67d32e8ee0dd669"
+  integrity sha512-QSPyagA2AqBoS1t2L+pXyUrQsFn9+yqNPCa+qvBR5IbyISyxt/mbscXhWVCbBmF5YVFXRoRezGIVEszNnUf1yg==
   dependencies:
-    "@aws-cdk/aws-ec2" "1.105.0"
     "@aws-cdk/aws-lambda" "1.105.0"
     "@aws-cdk/core" "1.105.0"
     constructs "^3.3.69"
