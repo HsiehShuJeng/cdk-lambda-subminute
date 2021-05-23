@@ -1,5 +1,4 @@
-// import * as sfn from '@aws-cdk/aws-stepfunctions';
-// import * as tasks from '@aws-cdk/aws-stepfunctions-tasks';
+import * as fs from 'fs';
 import * as path from 'path';
 import events = require('@aws-cdk/aws-events');
 import targets = require('@aws-cdk/aws-events-targets');
@@ -24,6 +23,18 @@ export interface LambdaSubminuteProps {
    * @default cron(50/1 15-17 ? * * *) UTC+0 being run every minute starting from 15:00 PM to 17:00 PM.
    */
   readonly conjobExpression?: string;
+  /**
+   * How many times you intent to execute in a minute.
+   *
+   * @default 6
+   */
+  readonly frequency?: number;
+  /**
+   * Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute.
+   *
+   * @default 10
+   */
+  readonly intervalTime?: number;
 }
 
 export class LambdaSubminute extends cdk.Construct {
@@ -43,6 +54,8 @@ export class LambdaSubminute extends cdk.Construct {
       stateMachineName: 'lambda-subminute-statemachine',
       targetFunction: props.targetFunction,
       iteratorFunction: this.iteratorFunction,
+      intervalTime: props.intervalTime ?? 10,
+      frequency: props.frequency ?? 6,
     });
     this.stateMachineArn = subminuteStateMachine.stateMachine.stateMachineArn;
 
@@ -104,7 +117,7 @@ class IteratorLambda extends cdk.Construct {
       description: 'A function for breaking the limit of 1 minute with the CloudWatch Rules.',
       logRetention: RetentionDays.THREE_MONTHS,
       runtime: Runtime.NODEJS_14_X,
-      entry: path.join(__dirname, 'resources/iterator/iterator_agent.ts'),
+      entry: fs.existsSync(path.join(__dirname, 'resources/iterator/iterator_agent.ts')) ? path.join(__dirname, 'resources/iterator/iterator_agent.ts') : path.join(__dirname, 'resources/iterator/iterator_agent.js'),
       handler: 'lambdaHandler',
       environment: {
         TARGET_FN_NAME: props.targetFunction.functionName,
@@ -130,6 +143,18 @@ interface SubminuteStateMachineProps {
    * the iterator Lambda function for the target Lambda function.
    */
   iteratorFunction: IFunction;
+  /**
+   * Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute.
+   *
+   * @default 10
+   */
+  intervalTime: number;
+  /**
+   * How many times you intent to execute in a minute.
+   *
+   * @default 6
+   */
+  frequency: number;
 }
 
 class SubminuteStateMachine extends cdk.Construct {
@@ -138,7 +163,7 @@ class SubminuteStateMachine extends cdk.Construct {
     super(scope, id);
     const stateMachineRole = this._createWorkFlowRole(
       props.targetFunction.functionArn, props.iteratorFunction.functionArn);
-    const jobDefinition = this.createJobDefinition(props.iteratorFunction);
+    const jobDefinition = this.createJobDefinition(props.iteratorFunction, props.intervalTime, props.frequency);
     const stateMachine = new sfn.StateMachine(this, 'StateMachine', {
       stateMachineName: props.stateMachineName,
       definition: jobDefinition,
@@ -150,15 +175,17 @@ class SubminuteStateMachine extends cdk.Construct {
   /**
    * Creates a state machine for breaking the limit of 1 minute with the CloudWatch Rules.
    *
-   * @param iteratorFunction the iterator Lambda function for the target Labmda funciton.
+   * @param iteratorFunction The iterator Lambda function for the target Labmda funciton.
+   * @param intervalTime Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute.
+   * @param frequency How many times you intent to execute in a minute.
    * @returns THe job definition for the state machine.
    */
   private createJobDefinition = (
-    iteratorFunction: IFunction): sfn.Chain => {
+    iteratorFunction: IFunction, intervalTime: number, frequency: number): sfn.Chain => {
     const configureCount = new sfn.Pass(this, 'ConfigureCount', {
       result: sfn.Result.fromObject({
         index: 0,
-        count: 6,
+        count: frequency,
       }),
       resultPath: '$.iterator',
     });
@@ -172,7 +199,7 @@ class SubminuteStateMachine extends cdk.Construct {
       },
     });
     const wait = new sfn.Wait(this, 'Wait for the target Lambda function finished', {
-      time: sfn.WaitTime.duration(cdk.Duration.seconds(10)),
+      time: sfn.WaitTime.duration(cdk.Duration.seconds(intervalTime)),
     });
     wait.next(iterator);
     const done = new sfn.Pass(this, 'Done');

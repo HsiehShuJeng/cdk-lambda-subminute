@@ -85,7 +85,8 @@
     "aws-step-functions",
     "cdk",
     "projen",
-    "scott.hsieh"
+    "scott.hsieh",
+    "serverless"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",

@@ -36,6 +36,8 @@ new LambdaSubminute(parent: Construct, name: string, props: LambdaSubminuteProps
 * **props** (<code>[LambdaSubminuteProps](#cdk-lambda-subminute-lambdasubminuteprops)</code>)  *No description*
   * **targetFunction** (<code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code>)  The Lambda function that is going to be executed per time unit less than one minute. 
   * **conjobExpression** (<code>string</code>)  A pattern you want this statemachine to be executed. __*Default*__: cron(50/1 15-17 ? * * *) UTC+0 being run every minute starting from 15:00 PM to 17:00 PM.
+  * **frequency** (<code>number</code>)  How many times you intent to execute in a minute. __*Default*__: 6
+  * **intervalTime** (<code>number</code>)  Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute. __*Default*__: 10
 
 
 
@@ -60,6 +62,8 @@ Name | Type | Description
 -----|------|-------------
 **targetFunction** | <code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code> | The Lambda function that is going to be executed per time unit less than one minute.
 **conjobExpression**? | <code>string</code> | A pattern you want this statemachine to be executed.<br/>__*Default*__: cron(50/1 15-17 ? * * *) UTC+0 being run every minute starting from 15:00 PM to 17:00 PM.
+**frequency**? | <code>number</code> | How many times you intent to execute in a minute.<br/>__*Default*__: 6
+**intervalTime**? | <code>number</code> | Seconds for an interval, the product of `frequency` and `intervalTime` should be approximagely 1 minute.<br/>__*Default*__: 10
 
 
 

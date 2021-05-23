@@ -3,7 +3,13 @@ const project = new AwsCdkConstructLibrary({
   author: 'scott.hsieh',
   authorName: 'Shu-Jeng Hsieh',
   authorAddress: 'https://fantasticsie.medium.com/',
-  keywords: ['aws-step-functions', 'aws-lambda', 'projen', 'aws-cloudwatch-events', 'scott.hsieh'],
+  keywords: [
+    'aws-step-functions',
+    'aws-lambda', 'projen',
+    'aws-cloudwatch-events',
+    'serverless',
+    'scott.hsieh',
+  ],
 
   catalog: {
     twitter: 'fantasticHsieh',

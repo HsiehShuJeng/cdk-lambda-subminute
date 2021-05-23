@@ -10,9 +10,6 @@ test('simple test', () => {
   const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined' ? cdk.FileSystem.tmpdir : '/__w/_temp';
   const app = new cdk.App({ outdir: outdir });
   const stack = new cdk.Stack(app, 'TestStack');
-  console.log(cdk.AssetStaging.BUNDLING_OUTPUT_DIR);
-  console.log(`outdir:${outdir}`);
-  console.log(cdk.FileSystem.tmpdir);
   const targetLabmda = new Function(stack, 'targetFunction', {
     code: Code.fromInline('exports.handler = function(event, ctx, cb) { return cb(null, "hi"); })'),
     functionName: 'testTargetFunction',
@@ -23,6 +20,10 @@ test('simple test', () => {
   new LambdaSubminute(stack, 'LambdaSubminute', { targetFunction: targetLabmda });
 
   expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
+  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::IAM::Role', 5);
+  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::Lambda::Function', 3);
+  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::StepFunctions::StateMachine', 1);
+  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::Events::Rule', 1);
   expect(stack).toHaveResourceLike('AWS::Lambda::Function', {
     Role: {
       'Fn::GetAtt': [
@@ -75,5 +76,25 @@ test('simple test', () => {
       ],
     },
     StateMachineName: 'lambda-subminute-statemachine',
+  });
+  expect(stack).toHaveResourceLike('AWS::Events::Rule', {
+    Name: 'subminute-statemachine-lambda-rule',
+    ScheduleExpression: 'cron(50/1 15-17 ? * * *)',
+    State: 'ENABLED',
+    Targets: [
+      {
+        Arn: {
+          Ref: 'LambdaSubminuteSubminuteStateMachine23D30D9D',
+        },
+        Id: 'Target0',
+        Input: '{"iterator":{"index":0,"count":6}}',
+        RoleArn: {
+          'Fn::GetAtt': [
+            'LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374',
+            'Arn',
+          ],
+        },
+      },
+    ],
   });
 });
