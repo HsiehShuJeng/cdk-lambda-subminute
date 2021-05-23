@@ -26,11 +26,11 @@ class PythonStack(cdk.Stack):
         subminute_master = LambdaSubminute(
             self, "LambdaSubminute",
             target_function=target_lambda,
-            conjob_expression=cron_job_example,
+            cronjob_expression=cron_job_example,
             frequency=7,
             interval_time=8)
 
         cdk.CfnOutput(self, "OStateMachineArn",
                       value=subminute_master.state_machine_arn)
         cdk.CfnOutput(self, "OIteratorFunctionArn",
-                      value=subminute_master.interator_function.function_arn)
+                      value=subminute_master.iterator_function.function_arn)
