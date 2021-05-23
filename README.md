@@ -3,7 +3,7 @@ This construct creates a state machine that can invoke a Lambda function per tim
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](https://opensource.org/licenses/Apache-2.0)  
 [![Build](https://github.com/HsiehShuJeng/cdk-lambda-subminute/actions/workflows/build.yml/badge.svg)](https://github.com/HsiehShuJeng/cdk-lambda-subminute/actions/workflows/build.yml) [![Release](https://github.com/HsiehShuJeng/cdk-lambda-subminute/workflows/Release/badge.svg)](https://github.com/HsiehShuJeng/cdk-lambda-subminute/actions/workflows/release.yml)  
 [![Python](https://img.shields.io/pypi/pyversions/cdk-lambda-subminute)](https://pypi.org/) [![pip](https://img.shields.io/badge/pip%20install-cdk--lambda--subminute-blue)](https://pypi.org/project/cdk-lambda-subminute/)  
-[![npm version](https://img.shields.io/npm/v/cdk-lambda-subminute)](https://www.npmjs.com/package/cdk-lambda-subminute) [![pypi evrsion](https://img.shields.io/pypi/v/cdk-lambda-subminute)](https://pypi.org/project/cdk-lambda-subminute/) [![Maven](https://search.maven.org/search?q=a:cdk-lambda-subminute)](https://search.maven.org/) [![nuget](https://img.shields.io/nuget/v/Lambda.Subminute)](https://www.nuget.org/packages/Lambda.Subminute/)  
+[![npm version](https://img.shields.io/npm/v/cdk-lambda-subminute)](https://www.npmjs.com/package/cdk-lambda-subminute) [![pypi evrsion](https://img.shields.io/pypi/v/cdk-lambda-subminute)](https://pypi.org/project/cdk-lambda-subminute/) [![Maven](https://img.shields.io/maven-central/v/io.github.hsiehshujeng/cdk-lambda-subminute)](https://search.maven.org/search?q=a:cdk-lambda-subminute) [![nuget](https://img.shields.io/nuget/v/Lambda.Subminute)](https://www.nuget.org/packages/Lambda.Subminute/)  
 
 # Serverless Architecture  
 <p align="center"><img src="/images/cdk_lambda_subminute.png"/></p>  
@@ -30,7 +30,7 @@ class TypescriptStack extends cdk.Stack {
       handler: 'index.handler',
     });
     const cronJobExample = 'cron(50/1 15-17 ? * SUN-SAT *)';
-    const subminuteMaster = new LambdaSubminute(this, 'LambdaSubminute', { targetFunction: targetLabmda, conjobExpression: cronJobExample });
+    const subminuteMaster = new LambdaSubminute(this, 'LambdaSubminute', { targetFunction: targetLabmda, cronjobExpression: cronJobExample });
 
     new cdk.CfnOutput(this, 'OStateMachineArn', { value: subminuteMaster.stateMachineArn });
     new cdk.CfnOutput(this, 'OIteratorFunctionArn', { value: subminuteMaster.iteratorFunction.functionArn });
@@ -39,19 +39,6 @@ class TypescriptStack extends cdk.Stack {
 
 const app = new cdk.App();
 new TypescriptStack(app, 'TypescriptStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-         * Account/Region-dependent features and context lookups will not work,
-         * but a single synthesized template can be deployed anywhere. */
-
-  /* Uncomment the next line to specialize this stack for the AWS Account
-         * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
-
-  /* Uncomment the next line if you know exactly what Account and Region you
-         * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
 ```
 ## Python
@@ -73,6 +60,9 @@ EOL
 $ python -m pip install -r requirements.txt
 ```  
 ```python
+```
+```bash
+$ deactivate
 ```
 ## Java  
 ## C#  
