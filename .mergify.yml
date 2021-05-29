@@ -12,6 +12,8 @@ pull_request_rules:
     conditions:
       - "#approved-reviews-by>=1"
       - status-success=build
+      - -title~=(WIP|wip)
+      - -label~=(blocked|do-not-merge)
   - name: Automatic merge PRs with auto-merge label upon successful build
     actions:
       merge:
@@ -23,13 +25,5 @@ pull_request_rules:
     conditions:
       - label=auto-merge
       - status-success=build
-  - name: Merge pull requests from dependabot if CI passes
-    conditions:
-      - author=dependabot[bot]
-      - status-success=build
-    actions:
-      merge:
-        method: squash
-        commit_message: title+body
-        strict: smart
-        strict_method: merge
+      - -title~=(WIP|wip)
+      - -label~=(blocked|do-not-merge)

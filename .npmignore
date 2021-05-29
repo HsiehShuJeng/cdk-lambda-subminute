@@ -2,7 +2,6 @@
 /.eslintrc.json
 /.github
 /.idea
-/.mergify.yml
 /.projen
 /.projenrc.js
 /.vscode
@@ -13,9 +12,11 @@
 /tsconfig.eslint.json
 /tsconfig.jest.json
 /tsconfig.json
+cdk.context.json
 dist
 junit.xml
 tsconfig.tsbuildinfo
+yarn-error.log
 !.jsii
 !/lib
 !/lib/**/*.d.ts

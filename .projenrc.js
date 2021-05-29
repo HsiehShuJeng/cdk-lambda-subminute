@@ -1,4 +1,6 @@
 const { AwsCdkConstructLibrary, NpmAccess, ProjectType } = require('projen');
+const { Mergify } = require('projen/lib/github');
+
 const project = new AwsCdkConstructLibrary({
   author: 'scott.hsieh',
   authorName: 'Shu-Jeng Hsieh',
@@ -21,7 +23,7 @@ const project = new AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
   projectName: 'cdk-lambda-subminute',
   projectType: ProjectType.LIB,
-  projenUpgradeAutoMerge: true,
+  projenUpgradeSecret: 'PROJEN_UPGRADE_SECRET',
 
   cdkDependencies: [
     '@aws-cdk/core',
@@ -44,10 +46,10 @@ const project = new AwsCdkConstructLibrary({
 
   npmAccess: NpmAccess.PUBLIC,
 
-  mergify: true,
+  mergify: false,
   docgen: true,
   eslint: true,
-  dependabot: true,
+  dependabot: false,
 
   gitignore: [
     'cdk.out',
@@ -105,4 +107,52 @@ project.eslint.addOverride({
   files: ['*.ts'],
   rules: { '@typescript-eslint/no-require-imports': 0 },
 });
+
+const mergifyRules = [
+  {
+    name: 'Automatic merge on approval and successful build',
+    actions: {
+      merge: {
+        method: 'squash',
+        commit_message: 'title+body',
+        strict: 'smart',
+        strict_method: 'merge',
+      },
+      delete_head_branch: {},
+    },
+    conditions: [
+      '#approved-reviews-by>=1',
+      'status-success=build',
+      '-title~=(WIP|wip)',
+      '-label~=(blocked|do-not-merge)',
+    ],
+  },
+  {
+    name: 'Automatic merge PRs with auto-merge label upon successful build',
+    actions: {
+      merge: {
+        method: 'squash',
+        commit_message: 'title+body',
+        strict: 'smart',
+        strict_method: 'merge',
+      },
+      delete_head_branch: {},
+    },
+    conditions: [
+      'label=auto-merge',
+      'status-success=build',
+      '-title~=(WIP|wip)',
+      '-label~=(blocked|do-not-merge)',
+    ],
+  },
+];
+
+new Mergify(project.github, {
+  rules: mergifyRules,
+});
+
+const commonExclusions = ['cdk.context.json', 'yarn-error.log'];
+project.npmignore.exclude(...commonExclusions);
+project.gitignore.exclude(...commonExclusions);
+
 project.synth();
