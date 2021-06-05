@@ -108,49 +108,6 @@ project.eslint.addOverride({
   rules: { '@typescript-eslint/no-require-imports': 0 },
 });
 
-const mergifyRules = [
-  {
-    name: 'Automatic merge on approval and successful build',
-    actions: {
-      merge: {
-        method: 'squash',
-        commit_message: 'title+body',
-        strict: 'smart',
-        strict_method: 'merge',
-      },
-      delete_head_branch: {},
-    },
-    conditions: [
-      '#approved-reviews-by>=1',
-      'status-success=build',
-      '-title~=(WIP|wip)',
-      '-label~=(blocked|do-not-merge)',
-    ],
-  },
-  {
-    name: 'Automatic merge PRs with auto-merge label upon successful build',
-    actions: {
-      merge: {
-        method: 'squash',
-        commit_message: 'title+body',
-        strict: 'smart',
-        strict_method: 'merge',
-      },
-      delete_head_branch: {},
-    },
-    conditions: [
-      'label=auto-merge',
-      'status-success=build',
-      '-title~=(WIP|wip)',
-      '-label~=(blocked|do-not-merge)',
-    ],
-  },
-];
-
-new Mergify(project.github, {
-  rules: mergifyRules,
-});
-
 const commonExclusions = ['cdk.context.json', 'yarn-error.log'];
 project.npmignore.exclude(...commonExclusions);
 project.gitignore.exclude(...commonExclusions);
