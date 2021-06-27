@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "build"
     },
     {
@@ -77,11 +77,6 @@
       "type": "build"
     },
     {
-      "name": "npm-check-updates",
-      "version": "^11",
-      "type": "build"
-    },
-    {
       "name": "projen",
       "version": "^0.17.95",
       "type": "build"
@@ -110,47 +105,47 @@
     },
     {
       "name": "@aws-cdk/aws-events-targets",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-events",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-iam",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-lambda-nodejs",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-logs",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-stepfunctions-tasks",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-stepfunctions",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
@@ -160,47 +155,47 @@
     },
     {
       "name": "@aws-cdk/aws-events-targets",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-events",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-iam",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda-nodejs",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-logs",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-stepfunctions-tasks",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-stepfunctions",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.107.0",
+      "version": "^1.110.0",
       "type": "runtime"
     }
   ],

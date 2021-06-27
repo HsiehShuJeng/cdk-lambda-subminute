@@ -17,7 +17,7 @@ const project = new AwsCdkConstructLibrary({
     twitter: 'fantasticHsieh',
   },
 
-  cdkVersion: '1.107.0',
+  cdkVersion: '1.110.0',
   defaultReleaseBranch: 'main',
   name: 'cdk-lambda-subminute',
   repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
@@ -46,10 +46,10 @@ const project = new AwsCdkConstructLibrary({
 
   npmAccess: NpmAccess.PUBLIC,
 
-  mergify: false,
+  mergify: true,
   docgen: true,
   eslint: true,
-  dependabot: false,
+  dependabot: true,
 
   gitignore: [
     'cdk.out',
