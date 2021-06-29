@@ -17,11 +17,10 @@ const project = new AwsCdkConstructLibrary({
     twitter: 'fantasticHsieh',
   },
 
-  cdkVersion: '1.110.0',
+  cdkVersion: '1.110.1',
   defaultReleaseBranch: 'main',
   name: 'cdk-lambda-subminute',
   repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
-  projectName: 'cdk-lambda-subminute',
   projectType: ProjectType.LIB,
   projenUpgradeSecret: 'PROJEN_UPGRADE_SECRET',
 
@@ -46,10 +45,12 @@ const project = new AwsCdkConstructLibrary({
 
   npmAccess: NpmAccess.PUBLIC,
 
-  mergify: true,
-  docgen: true,
   eslint: true,
-  dependabot: true,
+  projenUpgradeSecret: 'PROJEN_UPGRADE_SECRET',
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+  },
+  depsUpgradeAutoMerge: true,
 
   gitignore: [
     'cdk.out',
@@ -79,7 +80,6 @@ const project = new AwsCdkConstructLibrary({
 
   // publish to npm
   releaseToNpm: true,
-  releaseBranches: ['main'],
   releaseWorkflow: true,
   releaseEveryCommit: true, //will run the release GitHub Action on each push to the defined
 
