@@ -1,5 +1,6 @@
 {
   "name": "cdk-lambda-subminute",
+  "description": "A construct for deploying a Lambda function that can be invoked every time unit less than one minute.",
   "repository": {
     "type": "git",
     "url": "https://github.com/HsiehShuJeng/cdk-lambda-subminute.git"
