@@ -1,9 +1,6 @@
-// import * as fs from 'fs';
-// import * as path from 'path';
-import { SynthUtils } from '@aws-cdk/assert';
-import '@aws-cdk/assert/jest';
-import { Code, Function, Runtime } from '@aws-cdk/aws-lambda';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
+import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { LambdaSubminute } from '../src';
 
 test('simple test', () => {
@@ -18,13 +15,13 @@ test('simple test', () => {
   });
 
   new LambdaSubminute(stack, 'LambdaSubminute', { targetFunction: targetLabmda });
+  const template = Template.fromStack(stack);
 
-  expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
-  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::IAM::Role', 5);
-  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::Lambda::Function', 3);
-  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::StepFunctions::StateMachine', 1);
-  expect(SynthUtils.toCloudFormation(stack)).toCountResources('AWS::Events::Rule', 1);
-  expect(stack).toHaveResourceLike('AWS::Lambda::Function', {
+  template.resourceCountIs('AWS::IAM::Role', 5);
+  template.resourceCountIs('AWS::Lambda::Function', 3);
+  template.resourceCountIs('AWS::StepFunctions::StateMachine', 1);
+  template.resourceCountIs('AWS::Events::Rule', 1);
+  template.hasResourceProperties('AWS::Lambda::Function', {
     Role: {
       'Fn::GetAtt': [
         'LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8',
@@ -49,7 +46,7 @@ test('simple test', () => {
     },
   },
   );
-  expect(stack).toHaveResourceLike('AWS::StepFunctions::StateMachine', {
+  template.hasResourceProperties('AWS::StepFunctions::StateMachine', {
     RoleArn: {
       'Fn::GetAtt': [
         'LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802',
@@ -77,7 +74,7 @@ test('simple test', () => {
     },
     StateMachineName: 'lambda-subminute-statemachine',
   });
-  expect(stack).toHaveResourceLike('AWS::Events::Rule', {
+  template.hasResourceProperties('AWS::Events::Rule', {
     Name: 'subminute-statemachine-lambda-rule',
     ScheduleExpression: 'cron(50/1 15-17 ? * * *)',
     State: 'ENABLED',

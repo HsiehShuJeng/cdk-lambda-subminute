@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // import 'source-map-support/register';
-import { Code, Function, Runtime } from '@aws-cdk/aws-lambda';
-import * as cdk from '@aws-cdk/core';
+import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
+import * as cdk from 'aws-cdk-lib/core';
+import { Construct } from 'constructs';
 import { LambdaSubminute } from '../../cdk-lambda-subminute';
 
 class TypescriptStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const targetLabmda = new Function(this, 'targetFunction', {

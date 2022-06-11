@@ -1,7 +1,6 @@
-const { AwsCdkConstructLibrary, NpmAccess, ProjectType } = require('projen');
-const { Mergify } = require('projen/lib/github');
+const projen = require('projen');
 
-const project = new AwsCdkConstructLibrary({
+const project = new projen.awscdk.AwsCdkConstructLibrary({
   author: 'scott.hsieh',
   authorName: 'Shu-Jeng Hsieh',
   authorAddress: 'https://fantasticsie.medium.com/',
@@ -13,46 +12,35 @@ const project = new AwsCdkConstructLibrary({
     'scott.hsieh',
   ],
   description: 'A construct for deploying a Lambda function that can be invoked every time unit less than one minute.',
-
-  catalog: {
-    twitter: 'fantasticHsieh',
-  },
-
-  cdkVersion: '1.111.0',
+  cdkVersion: '2.27.0',
+  majorVersion: 2,
   defaultReleaseBranch: 'main',
   name: 'cdk-lambda-subminute',
   repositoryUrl: 'https://github.com/HsiehShuJeng/cdk-lambda-subminute.git',
-  projectType: ProjectType.LIB,
-  projenUpgradeSecret: 'PROJEN_UPGRADE_SECRET',
-
-  cdkDependencies: [
-    '@aws-cdk/core',
-    '@aws-cdk/aws-events',
-    '@aws-cdk/aws-events-targets',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-nodejs',
-    '@aws-cdk/aws-logs',
-    '@aws-cdk/aws-iam',
-    '@aws-cdk/aws-stepfunctions',
-    '@aws-cdk/aws-stepfunctions-tasks',
+  deps: [
+    'aws-cdk-lib',
+    'constructs@^10.0.5',
   ],
-  cdkAssert: true,
-  cdkVersionPinning: false, // see https://www.matthewbonig.com/2021/04/06/automating-construct-publishing/
-
   devDeps: [
+    'aws-cdk-lib',
+    'constructs@^10.0.5',
     'esbuild',
     'source-map-support',
   ],
-
-  npmAccess: NpmAccess.PUBLIC,
-
+  peerDeps: [
+    'aws-cdk-lib',
+    'constructs@^10.0.5',
+  ],
   eslint: true,
-  projenUpgradeSecret: 'PROJEN_UPGRADE_SECRET',
+  depsUpgradeOptions: {
+    workflowOptions: {
+      labels: ['auto-approve', 'auto-merge'],
+    },
+  },
   autoApproveOptions: {
     secret: 'GITHUB_TOKEN',
     allowedUsernames: ['HsiehShuJeng'],
   },
-  depsUpgradeAutoMerge: true,
 
   gitignore: [
     'cdk.out',
@@ -78,31 +66,23 @@ const project = new AwsCdkConstructLibrary({
     '.vscode/',
     '*.iml',
   ],
-  defaultReleaseBranch: 'main',
-
-  // publish to npm
   releaseToNpm: true,
-  releaseWorkflow: true,
-  releaseEveryCommit: true, //will run the release GitHub Action on each push to the defined
-
-  // publish to PyPi
   publishToPypi: {
     distName: 'cdk_lambda_subminute',
     module: 'cdk_lambda_subminute',
   },
-
-  // publish to Maven
   publishToMaven: {
     mavenGroupId: 'io.github.hsiehshujeng',
     mavenArtifactId: 'cdk-lambda-subminute',
     javaPackage: 'io.github.hsiehshujeng.cdk.lambda.subminute',
     mavenEndpoint: 'https://s01.oss.sonatype.org', // check https://central.sonatype.org/publish/release/#login-into-ossrh
   },
-
-  // publish to dotnet
   publishToNuget: {
     dotNetNamespace: 'ScottHsieh.Cdk',
     packageId: 'Lambda.Subminute',
+  },
+  publishToGo: {
+    moduleName: 'github.com/HsiehShuJeng/cdk-lambda-subminute-go',
   },
 });
 project.eslint.addOverride({

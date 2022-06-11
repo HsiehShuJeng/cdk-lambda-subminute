@@ -1,15 +1,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import events = require('@aws-cdk/aws-events');
-import targets = require('@aws-cdk/aws-events-targets');
-import * as iam from '@aws-cdk/aws-iam';
+import * as cdk from 'aws-cdk-lib';
+import events = require('aws-cdk-lib/aws-events');
+import targets = require('aws-cdk-lib/aws-events-targets');
+import * as iam from 'aws-cdk-lib/aws-iam';
 
-import { IFunction, Runtime, Tracing } from '@aws-cdk/aws-lambda';
-import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { RetentionDays } from '@aws-cdk/aws-logs';
-import * as sfn from '@aws-cdk/aws-stepfunctions';
-import * as tasks from '@aws-cdk/aws-stepfunctions-tasks';
-import * as cdk from '@aws-cdk/core';
+import { IFunction, Runtime, Tracing } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { RetentionDays } from 'aws-cdk-lib/aws-logs';
+import * as sfn from 'aws-cdk-lib/aws-stepfunctions';
+import * as tasks from 'aws-cdk-lib/aws-stepfunctions-tasks';
+import { Construct } from 'constructs';
 
 export interface LambdaSubminuteProps {
   /**
@@ -37,7 +38,7 @@ export interface LambdaSubminuteProps {
   readonly intervalTime?: number;
 }
 
-export class LambdaSubminute extends cdk.Construct {
+export class LambdaSubminute extends Construct {
   /**
    * The Lambda function that plays the role of the iterator.
    */
@@ -46,7 +47,7 @@ export class LambdaSubminute extends cdk.Construct {
    * The ARN of the state machine that executes the target Lambda function per time unit less than one minute.
    */
   readonly stateMachineArn: string;
-  constructor(parent: cdk.Construct, name: string, props: LambdaSubminuteProps) {
+  constructor(parent: Construct, name: string, props: LambdaSubminuteProps) {
     super(parent, name);
     const iterator = new IteratorLambda(this, 'IteratorLambda', { targetFunction: props.targetFunction });
     this.iteratorFunction = iterator.function;
@@ -83,12 +84,12 @@ export interface IteratorLambdaProps {
   readonly targetFunction: IFunction;
 }
 
-export class IteratorLambda extends cdk.Construct {
+export class IteratorLambda extends Construct {
   /**
      * A Lambda function that plays the role of the iterator.
      */
   readonly function: IFunction;
-  constructor(scope: cdk.Construct, name: string, props: IteratorLambdaProps) {
+  constructor(scope: Construct, name: string, props: IteratorLambdaProps) {
     super(scope, name);
     const iteratorLambdaRole = new iam.Role(this, 'IteratorLambdaRole', {
       assumedBy: new iam.CompositePrincipal(
@@ -157,9 +158,9 @@ export interface SubminuteStateMachineProps {
   readonly frequency: number;
 }
 
-export class SubminuteStateMachine extends cdk.Construct {
+export class SubminuteStateMachine extends Construct {
   readonly stateMachine: sfn.StateMachine;
-  constructor(scope: cdk.Construct, id: string, props: SubminuteStateMachineProps) {
+  constructor(scope: Construct, id: string, props: SubminuteStateMachineProps) {
     super(scope, id);
     const stateMachineRole = this._createWorkFlowRole(
       props.targetFunction.functionArn, props.iteratorFunction.functionArn);
@@ -209,7 +210,7 @@ export class SubminuteStateMachine extends cdk.Construct {
     isCountReached.otherwise(done);
     const jobDefinition = configureCount.next(iterator).next(isCountReached);
     return jobDefinition;
-  }
+  };
 
   /**
    * Creates a role and corresponding policies for the subminute state machine.
@@ -233,5 +234,5 @@ export class SubminuteStateMachine extends cdk.Construct {
       ],
     }));
     return workFlowExecutionRole;
-  }
+  };
 }
