@@ -93,5 +93,6 @@ project.eslint.addOverride({
 const commonExclusions = ['cdk.context.json', 'yarn-error.log'];
 project.npmignore.exclude(...commonExclusions);
 project.gitignore.exclude(...commonExclusions);
+project.package.addPackageResolutions('got@12.3.0');
 
 project.synth();
