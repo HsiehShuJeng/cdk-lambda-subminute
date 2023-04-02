@@ -1,0 +1,624 @@
+{
+ "Resources": {
+  "targetFunctionServiceRole6EE8FF2F": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "targetFunctionFDF105E2": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ZipFile": "exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "targetFunctionServiceRole6EE8FF2F",
+      "Arn"
+     ]
+    },
+    "FunctionName": "testTargetFunction",
+    "Handler": "index.handler",
+    "Runtime": "nodejs12.x"
+   },
+   "DependsOn": [
+    "targetFunctionServiceRole6EE8FF2F"
+   ]
+  },
+  "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "An execution role for a Lambda function to invoke a target Lambda Function per time unit less than one minute",
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AWSXRayDaemonWriteAccess"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "RoleName": "Lambda-Iterator-Role"
+   }
+  },
+  "LambdaSubminuteIteratorLambdaIteratorLambdaRoleDefaultPolicy259A62D8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "targetFunctionFDF105E2",
+         "Arn"
+        ]
+       },
+       "Sid": "TargetLambdaPermission"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "LambdaSubminuteIteratorLambdaIteratorLambdaRoleDefaultPolicy259A62D8",
+    "Roles": [
+     {
+      "Ref": "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8"
+     }
+    ]
+   }
+  },
+  "LambdaSubminuteIteratorLambdaIterator43007E8C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "08284ec1aa030f3fe4d66c1df4a8b19293166d91ebf7c370863c9f2a231a33e3.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8",
+      "Arn"
+     ]
+    },
+    "Description": "A function for breaking the limit of 1 minute with the CloudWatch Rules.",
+    "Environment": {
+     "Variables": {
+      "TARGET_FN_NAME": {
+       "Ref": "targetFunctionFDF105E2"
+      },
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "FunctionName": "lambda-subminute-iterator",
+    "Handler": "index.lambdaHandler",
+    "MemorySize": 128,
+    "Runtime": "nodejs14.x",
+    "Timeout": 58,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "DependsOn": [
+    "LambdaSubminuteIteratorLambdaIteratorLambdaRoleDefaultPolicy259A62D8",
+    "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8"
+   ]
+  },
+  "LambdaSubminuteIteratorLambdaIteratorLogRetention5C3C3E8C": {
+   "Type": "Custom::LogRetention",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+      "Arn"
+     ]
+    },
+    "LogGroupName": {
+     "Fn::Join": [
+      "",
+      [
+       "/aws/lambda/",
+       {
+        "Ref": "LambdaSubminuteIteratorLambdaIterator43007E8C"
+       }
+      ]
+     ]
+    },
+    "RetentionInDays": 90
+   }
+  },
+  "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": {
+         "Fn::FindInMap": [
+          "ServiceprincipalMap",
+          {
+           "Ref": "AWS::Region"
+          },
+          "states"
+         ]
+        }
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "Execute a workflow related to executing a Lambda function per time unit less than 1 minute."
+   }
+  },
+  "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleDefaultPolicy93E64C89": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "targetFunctionFDF105E2",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::GetAtt": [
+          "LambdaSubminuteIteratorLambdaIterator43007E8C",
+          "Arn"
+         ]
+        }
+       ],
+       "Sid": "LambdaInvokePermissions"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "LambdaSubminuteIteratorLambdaIterator43007E8C",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "LambdaSubminuteIteratorLambdaIterator43007E8C",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleDefaultPolicy93E64C89",
+    "Roles": [
+     {
+      "Ref": "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802"
+     }
+    ]
+   }
+  },
+  "LambdaSubminuteSubminuteStateMachine23D30D9D": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802",
+      "Arn"
+     ]
+    },
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"ConfigureCount\",\"States\":{\"ConfigureCount\":{\"Type\":\"Pass\",\"Result\":{\"index\":0,\"count\":6},\"ResultPath\":\"$.iterator\",\"Next\":\"Iterator\"},\"Iterator\":{\"Next\":\"IsCountReached\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"ResultPath\":\"$.iterator\",\"ResultSelector\":{\"index.$\":\"$.Payload.index\",\"count.$\":\"$.Payload.count\",\"continue.$\":\"$.Payload.continue\"},\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "LambdaSubminuteIteratorLambdaIterator43007E8C",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}},\"Wait for the target Lambda function finished\":{\"Type\":\"Wait\",\"Seconds\":10,\"Next\":\"Iterator\"},\"IsCountReached\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.iterator.continue\",\"BooleanEquals\":true,\"Next\":\"Wait for the target Lambda function finished\"}],\"Default\":\"Done\"},\"Done\":{\"Type\":\"Pass\",\"End\":true}}}"
+      ]
+     ]
+    },
+    "StateMachineName": "lambda-subminute-statemachine"
+   },
+   "DependsOn": [
+    "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleDefaultPolicy93E64C89",
+    "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "events.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "LambdaSubminuteSubminuteStateMachineEventsRoleDefaultPolicy88FF3DD8": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "LambdaSubminuteSubminuteStateMachine23D30D9D"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "LambdaSubminuteSubminuteStateMachineEventsRoleDefaultPolicy88FF3DD8",
+    "Roles": [
+     {
+      "Ref": "LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374"
+     }
+    ]
+   }
+  },
+  "LambdaSubminuteStartSubminuteStateMachine54B0F2BF": {
+   "Type": "AWS::Events::Rule",
+   "Properties": {
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "A rule to run the subminute state machine, i.e. ",
+       {
+        "Fn::GetAtt": [
+         "LambdaSubminuteSubminuteStateMachine23D30D9D",
+         "Name"
+        ]
+       }
+      ]
+     ]
+    },
+    "Name": "subminute-statemachine-lambda-rule",
+    "ScheduleExpression": "cron(50/1 15-17 ? * * *)",
+    "State": "ENABLED",
+    "Targets": [
+     {
+      "Arn": {
+       "Ref": "LambdaSubminuteSubminuteStateMachine23D30D9D"
+      },
+      "Id": "Target0",
+      "Input": "{\"iterator\":{\"index\":0,\"count\":6}}",
+      "RoleArn": {
+       "Fn::GetAtt": [
+        "LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374",
+        "Arn"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:PutRetentionPolicy",
+        "logs:DeleteRetentionPolicy"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+    "Roles": [
+     {
+      "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+     }
+    ]
+   }
+  },
+  "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Handler": "index.handler",
+    "Runtime": "nodejs14.x",
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "5fa1330271b8967d9254ba2d4a07144f8acefe8b77e6d6bba38261373a50d5f8.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+   ]
+  }
+ },
+ "Mappings": {
+  "ServiceprincipalMap": {
+   "af-south-1": {
+    "states": "states.af-south-1.amazonaws.com"
+   },
+   "ap-east-1": {
+    "states": "states.ap-east-1.amazonaws.com"
+   },
+   "ap-northeast-1": {
+    "states": "states.ap-northeast-1.amazonaws.com"
+   },
+   "ap-northeast-2": {
+    "states": "states.ap-northeast-2.amazonaws.com"
+   },
+   "ap-northeast-3": {
+    "states": "states.ap-northeast-3.amazonaws.com"
+   },
+   "ap-south-1": {
+    "states": "states.ap-south-1.amazonaws.com"
+   },
+   "ap-south-2": {
+    "states": "states.ap-south-2.amazonaws.com"
+   },
+   "ap-southeast-1": {
+    "states": "states.ap-southeast-1.amazonaws.com"
+   },
+   "ap-southeast-2": {
+    "states": "states.ap-southeast-2.amazonaws.com"
+   },
+   "ap-southeast-3": {
+    "states": "states.ap-southeast-3.amazonaws.com"
+   },
+   "ca-central-1": {
+    "states": "states.ca-central-1.amazonaws.com"
+   },
+   "cn-north-1": {
+    "states": "states.cn-north-1.amazonaws.com"
+   },
+   "cn-northwest-1": {
+    "states": "states.cn-northwest-1.amazonaws.com"
+   },
+   "eu-central-1": {
+    "states": "states.eu-central-1.amazonaws.com"
+   },
+   "eu-central-2": {
+    "states": "states.eu-central-2.amazonaws.com"
+   },
+   "eu-north-1": {
+    "states": "states.eu-north-1.amazonaws.com"
+   },
+   "eu-south-1": {
+    "states": "states.eu-south-1.amazonaws.com"
+   },
+   "eu-south-2": {
+    "states": "states.eu-south-2.amazonaws.com"
+   },
+   "eu-west-1": {
+    "states": "states.eu-west-1.amazonaws.com"
+   },
+   "eu-west-2": {
+    "states": "states.eu-west-2.amazonaws.com"
+   },
+   "eu-west-3": {
+    "states": "states.eu-west-3.amazonaws.com"
+   },
+   "me-central-1": {
+    "states": "states.me-central-1.amazonaws.com"
+   },
+   "me-south-1": {
+    "states": "states.me-south-1.amazonaws.com"
+   },
+   "sa-east-1": {
+    "states": "states.sa-east-1.amazonaws.com"
+   },
+   "us-east-1": {
+    "states": "states.us-east-1.amazonaws.com"
+   },
+   "us-east-2": {
+    "states": "states.us-east-2.amazonaws.com"
+   },
+   "us-gov-east-1": {
+    "states": "states.us-gov-east-1.amazonaws.com"
+   },
+   "us-gov-west-1": {
+    "states": "states.us-gov-west-1.amazonaws.com"
+   },
+   "us-iso-east-1": {
+    "states": "states.amazonaws.com"
+   },
+   "us-iso-west-1": {
+    "states": "states.amazonaws.com"
+   },
+   "us-isob-east-1": {
+    "states": "states.amazonaws.com"
+   },
+   "us-west-1": {
+    "states": "states.us-west-1.amazonaws.com"
+   },
+   "us-west-2": {
+    "states": "states.us-west-2.amazonaws.com"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

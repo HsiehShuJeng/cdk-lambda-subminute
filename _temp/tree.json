@@ -1,0 +1,919 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "TestStack": {
+        "id": "TestStack",
+        "path": "TestStack",
+        "children": {
+          "targetFunction": {
+            "id": "targetFunction",
+            "path": "TestStack/targetFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "TestStack/targetFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "TestStack/targetFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "TestStack/targetFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.72.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "TestStack/targetFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "zipFile": "exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "targetFunctionServiceRole6EE8FF2F",
+                        "Arn"
+                      ]
+                    },
+                    "functionName": "testTargetFunction",
+                    "handler": "index.handler",
+                    "runtime": "nodejs12.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.72.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.72.1"
+            }
+          },
+          "LambdaSubminute": {
+            "id": "LambdaSubminute",
+            "path": "TestStack/LambdaSubminute",
+            "children": {
+              "IteratorLambda": {
+                "id": "IteratorLambda",
+                "path": "TestStack/LambdaSubminute/IteratorLambda",
+                "children": {
+                  "IteratorLambdaRole": {
+                    "id": "IteratorLambdaRole",
+                    "path": "TestStack/LambdaSubminute/IteratorLambda/IteratorLambdaRole",
+                    "children": {
+                      "ImportIteratorLambdaRole": {
+                        "id": "ImportIteratorLambdaRole",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/IteratorLambdaRole/ImportIteratorLambdaRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/IteratorLambdaRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "lambda.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "description": "An execution role for a Lambda function to invoke a target Lambda Function per time unit less than one minute",
+                            "managedPolicyArns": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                                  ]
+                                ]
+                              },
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/AWSXRayDaemonWriteAccess"
+                                  ]
+                                ]
+                              },
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+                                  ]
+                                ]
+                              }
+                            ],
+                            "roleName": "Lambda-Iterator-Role"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/IteratorLambdaRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "TestStack/LambdaSubminute/IteratorLambda/IteratorLambdaRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "targetFunctionFDF105E2",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "Sid": "TargetLambdaPermission"
+                                    },
+                                    {
+                                      "Action": [
+                                        "xray:PutTraceSegments",
+                                        "xray:PutTelemetryRecords"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "LambdaSubminuteIteratorLambdaIteratorLambdaRoleDefaultPolicy259A62D8",
+                                "roles": [
+                                  {
+                                    "Ref": "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.72.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.72.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Iterator": {
+                    "id": "Iterator",
+                    "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator",
+                    "children": {
+                      "Code": {
+                        "id": "Code",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/Code",
+                        "children": {
+                          "Stage": {
+                            "id": "Stage",
+                            "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/Code/Stage",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.AssetStaging",
+                              "version": "2.72.1"
+                            }
+                          },
+                          "AssetBucket": {
+                            "id": "AssetBucket",
+                            "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/Code/AssetBucket",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                              "version": "2.72.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                          "aws:cdk:cloudformation:props": {
+                            "code": {
+                              "s3Bucket": {
+                                "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                              },
+                              "s3Key": "08284ec1aa030f3fe4d66c1df4a8b19293166d91ebf7c370863c9f2a231a33e3.zip"
+                            },
+                            "role": {
+                              "Fn::GetAtt": [
+                                "LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8",
+                                "Arn"
+                              ]
+                            },
+                            "description": "A function for breaking the limit of 1 minute with the CloudWatch Rules.",
+                            "environment": {
+                              "variables": {
+                                "TARGET_FN_NAME": {
+                                  "Ref": "targetFunctionFDF105E2"
+                                },
+                                "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+                              }
+                            },
+                            "functionName": "lambda-subminute-iterator",
+                            "handler": "index.lambdaHandler",
+                            "memorySize": 128,
+                            "runtime": "nodejs14.x",
+                            "timeout": 58,
+                            "tracingConfig": {
+                              "mode": "Active"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "LogRetention": {
+                        "id": "LogRetention",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/LogRetention",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/LogRetention/Resource",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.CfnResource",
+                              "version": "2.72.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_logs.LogRetention",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "TestStack/LambdaSubminute/IteratorLambda/Iterator/LogGroup",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.72.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.1.299"
+                }
+              },
+              "SubminuteStateMachine": {
+                "id": "SubminuteStateMachine",
+                "path": "TestStack/LambdaSubminute/SubminuteStateMachine",
+                "children": {
+                  "StepFunctionExecutionRole": {
+                    "id": "StepFunctionExecutionRole",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StepFunctionExecutionRole",
+                    "children": {
+                      "ImportStepFunctionExecutionRole": {
+                        "id": "ImportStepFunctionExecutionRole",
+                        "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StepFunctionExecutionRole/ImportStepFunctionExecutionRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StepFunctionExecutionRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": {
+                                      "Fn::FindInMap": [
+                                        "ServiceprincipalMap",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        "states"
+                                      ]
+                                    }
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "description": "Execute a workflow related to executing a Lambda function per time unit less than 1 minute."
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StepFunctionExecutionRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StepFunctionExecutionRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "targetFunctionFDF105E2",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::GetAtt": [
+                                            "LambdaSubminuteIteratorLambdaIterator43007E8C",
+                                            "Arn"
+                                          ]
+                                        }
+                                      ],
+                                      "Sid": "LambdaInvokePermissions"
+                                    },
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "LambdaSubminuteIteratorLambdaIterator43007E8C",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "LambdaSubminuteIteratorLambdaIterator43007E8C",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              ":*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleDefaultPolicy93E64C89",
+                                "roles": [
+                                  {
+                                    "Ref": "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.72.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.72.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "ConfigureCount": {
+                    "id": "ConfigureCount",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/ConfigureCount",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.Pass",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Iterator": {
+                    "id": "Iterator",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/Iterator",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions_tasks.LambdaInvoke",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Wait for the target Lambda function finished": {
+                    "id": "Wait for the target Lambda function finished",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/Wait for the target Lambda function finished",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.Wait",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Done": {
+                    "id": "Done",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/Done",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.Pass",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "IsCountReached": {
+                    "id": "IsCountReached",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/IsCountReached",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.Choice",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "StateMachine": {
+                    "id": "StateMachine",
+                    "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::StepFunctions::StateMachine",
+                          "aws:cdk:cloudformation:props": {
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "LambdaSubminuteSubminuteStateMachineStepFunctionExecutionRoleB6DFA802",
+                                "Arn"
+                              ]
+                            },
+                            "definitionString": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "{\"StartAt\":\"ConfigureCount\",\"States\":{\"ConfigureCount\":{\"Type\":\"Pass\",\"Result\":{\"index\":0,\"count\":6},\"ResultPath\":\"$.iterator\",\"Next\":\"Iterator\"},\"Iterator\":{\"Next\":\"IsCountReached\",\"Retry\":[{\"ErrorEquals\":[\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"ResultPath\":\"$.iterator\",\"ResultSelector\":{\"index.$\":\"$.Payload.index\",\"count.$\":\"$.Payload.count\",\"continue.$\":\"$.Payload.continue\"},\"Resource\":\"arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+                                  {
+                                    "Fn::GetAtt": [
+                                      "LambdaSubminuteIteratorLambdaIterator43007E8C",
+                                      "Arn"
+                                    ]
+                                  },
+                                  "\",\"Payload.$\":\"$\"}},\"Wait for the target Lambda function finished\":{\"Type\":\"Wait\",\"Seconds\":10,\"Next\":\"Iterator\"},\"IsCountReached\":{\"Type\":\"Choice\",\"Choices\":[{\"Variable\":\"$.iterator.continue\",\"BooleanEquals\":true,\"Next\":\"Wait for the target Lambda function finished\"}],\"Default\":\"Done\"},\"Done\":{\"Type\":\"Pass\",\"End\":true}}}"
+                                ]
+                              ]
+                            },
+                            "stateMachineName": "lambda-subminute-statemachine"
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_stepfunctions.CfnStateMachine",
+                          "version": "2.72.1"
+                        }
+                      },
+                      "EventsRole": {
+                        "id": "EventsRole",
+                        "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/EventsRole",
+                        "children": {
+                          "ImportEventsRole": {
+                            "id": "ImportEventsRole",
+                            "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/EventsRole/ImportEventsRole",
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.Resource",
+                              "version": "2.72.1"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/EventsRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "Service": "events.amazonaws.com"
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                              "version": "2.72.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/EventsRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "TestStack/LambdaSubminute/SubminuteStateMachine/StateMachine/EventsRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "states:StartExecution",
+                                          "Effect": "Allow",
+                                          "Resource": {
+                                            "Ref": "LambdaSubminuteSubminuteStateMachine23D30D9D"
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "LambdaSubminuteSubminuteStateMachineEventsRoleDefaultPolicy88FF3DD8",
+                                    "roles": [
+                                      {
+                                        "Ref": "LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                                  "version": "2.72.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.Policy",
+                              "version": "2.72.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Role",
+                          "version": "2.72.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_stepfunctions.StateMachine",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "constructs.Construct",
+                  "version": "10.1.299"
+                }
+              },
+              "StartSubminuteStateMachine": {
+                "id": "StartSubminuteStateMachine",
+                "path": "TestStack/LambdaSubminute/StartSubminuteStateMachine",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "TestStack/LambdaSubminute/StartSubminuteStateMachine/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                      "aws:cdk:cloudformation:props": {
+                        "description": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "A rule to run the subminute state machine, i.e. ",
+                              {
+                                "Fn::GetAtt": [
+                                  "LambdaSubminuteSubminuteStateMachine23D30D9D",
+                                  "Name"
+                                ]
+                              }
+                            ]
+                          ]
+                        },
+                        "name": "subminute-statemachine-lambda-rule",
+                        "scheduleExpression": "cron(50/1 15-17 ? * * *)",
+                        "state": "ENABLED",
+                        "targets": [
+                          {
+                            "id": "Target0",
+                            "arn": {
+                              "Ref": "LambdaSubminuteSubminuteStateMachine23D30D9D"
+                            },
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "LambdaSubminuteSubminuteStateMachineEventsRoleE48C5374",
+                                "Arn"
+                              ]
+                            },
+                            "input": "{\"iterator\":{\"index\":0,\"count\":6}}"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_events.CfnRule",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_events.Rule",
+                  "version": "2.72.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.299"
+            }
+          },
+          "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a": {
+            "id": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
+            "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.72.1"
+                }
+              },
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.72.1"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "logs:PutRetentionPolicy",
+                                    "logs:DeleteRetentionPolicy"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+                            "roles": [
+                              {
+                                "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.72.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.72.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.72.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "TestStack/LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a/Resource",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.72.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.299"
+            }
+          },
+          "Service-principalMap": {
+            "id": "Service-principalMap",
+            "path": "TestStack/Service-principalMap",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnMapping",
+              "version": "2.72.1"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "TestStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.72.1"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "TestStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.72.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.72.1"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.299"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.72.1"
+    }
+  }
+}
