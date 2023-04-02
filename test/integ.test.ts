@@ -4,7 +4,7 @@ import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { LambdaSubminute } from '../src';
 
 test('simple test', () => {
-  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined' ? cdk.FileSystem.tmpdir : '/__w/_temp';
+  const outdir = typeof process.env.GITHUB_WORKSPACE === 'undefined' ? cdk.FileSystem.tmpdir : `${process.env.GITHUB_WORKSPACE}/_temp`;
   const app = new cdk.App({ outdir: outdir });
   const stack = new cdk.Stack(app, 'TestStack');
   const targetLabmda = new Function(stack, 'targetFunction', {
