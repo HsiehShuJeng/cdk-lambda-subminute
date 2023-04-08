@@ -351,7 +351,7 @@
                 },
                 "constructInfo": {
                   "fqn": "constructs.Construct",
-                  "version": "10.1.304"
+                  "version": "10.1.305"
                 }
               },
               "SubminuteStateMachine": {
@@ -665,7 +665,7 @@
                 },
                 "constructInfo": {
                   "fqn": "constructs.Construct",
-                  "version": "10.1.304"
+                  "version": "10.1.305"
                 }
               },
               "StartSubminuteStateMachine": {
@@ -726,7 +726,7 @@
             },
             "constructInfo": {
               "fqn": "constructs.Construct",
-              "version": "10.1.304"
+              "version": "10.1.305"
             }
           },
           "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8a": {
@@ -869,7 +869,7 @@
             },
             "constructInfo": {
               "fqn": "constructs.Construct",
-              "version": "10.1.304"
+              "version": "10.1.305"
             }
           },
           "Service-principalMap": {
@@ -907,7 +907,7 @@
         "path": "Tree",
         "constructInfo": {
           "fqn": "constructs.Construct",
-          "version": "10.1.304"
+          "version": "10.1.305"
         }
       }
     },
