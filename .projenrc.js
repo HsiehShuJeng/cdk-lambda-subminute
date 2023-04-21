@@ -84,13 +84,14 @@ const project = new projen.awscdk.AwsCdkConstructLibrary({
   publishToGo: {
     moduleName: 'github.com/HsiehShuJeng/cdk-lambda-subminute-go',
   },
+  bundledDeps: ['aws-sdk'],
 });
 project.eslint.addOverride({
   files: ['*.ts'],
   rules: { '@typescript-eslint/no-require-imports': 0 },
 });
 
-const commonExclusions = ['cdk.context.json', 'yarn-error.log'];
+const commonExclusions = ['cdk.context.json', 'yarn-error.log', '_temp'];
 project.npmignore.exclude(...commonExclusions);
 project.gitignore.exclude(...commonExclusions);
 project.package.addPackageResolutions('got@12.3.0');

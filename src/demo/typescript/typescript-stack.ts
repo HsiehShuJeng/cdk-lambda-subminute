@@ -12,7 +12,7 @@ class TypescriptStack extends cdk.Stack {
     const targetLabmda = new Function(this, 'targetFunction', {
       code: Code.fromInline('exports.handler = function(event, ctx, cb) { return cb(null, "hi"); })'),
       functionName: 'testTargetFunction',
-      runtime: Runtime.NODEJS_12_X,
+      runtime: Runtime.NODEJS_18_X,
       handler: 'index.handler',
     });
     const cronJobExample = 'cron(50/1 3-4 ? * SUN-SAT *)';

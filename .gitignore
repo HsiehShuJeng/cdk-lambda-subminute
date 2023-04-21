@@ -72,3 +72,4 @@ tsconfig.json
 !/API.md
 cdk.context.json
 yarn-error.log
+_temp
