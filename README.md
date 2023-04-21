@@ -28,7 +28,7 @@ class TypescriptStack extends cdk.Stack {
     const targetLabmda = new Function(this, 'targetFunction', {
       code: Code.fromInline('exports.handler = function(event, ctx, cb) { return cb(null, "hi"); })'), // It's just a simple function for demonstration purpose only.
       functionName: 'testTargetFunction',
-      runtime: Runtime.NODEJS_12_X,
+      runtime: Runtime.NODEJS_18_X,
       handler: 'index.handler',
     });
     const cronJobExample = 'cron(50/1 15-17 ? * SUN-SAT *)';
@@ -75,7 +75,7 @@ class PythonStack(cdk.Stack):
             code=Code.from_inline(
                 "exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"),
             function_name="testTargetFunction",
-            runtime=Runtime.NODEJS_12_X,
+            runtime=Runtime.NODEJS_18_X,
             handler="index.handler"
         )
         cron_job_example = "cron(10/1 4-5 ? * SUN-SAT *)"
@@ -105,8 +105,8 @@ $ mvn package
 .
 <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <cdk.version>1.105.0</cdk.version>
-      <constrcut.verion>0.1.6</constrcut.verion>
+      <cdk.version>2.76.0</cdk.version>
+      <constrcut.verion>2.0.128</constrcut.verion>
       <junit.version>5.7.1</junit.version>
 </properties>
  .
@@ -160,7 +160,7 @@ public class JavaStack extends Stack {
           FunctionProps.builder()
               .code(Code.fromInline("exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"))
               .functionName("estTargetFunction")
-              .runtime(Runtime.NODEJS_12_X)
+              .runtime(Runtime.NODEJS_18_X)
               .handler("index.handler")
               .build());
         String cronJobExample = "cron(50/1 4-5 ? * SUN-SAT *)";
@@ -188,7 +188,7 @@ You could also refer to [here](https://github.com/HsiehShuJeng/cdk-lambda-submin
 ```bash
 $ cdk init --language csharp
 $ dotnet add src/Csharp package Amazon.CDK.AWS.Lambda
-$ dotnet add src/Csharp package Lambda.Subminute --version 0.1.6
+$ dotnet add src/Csharp package Lambda.Subminute --version 2.0.128
 ```
 ```cs
 using Amazon.CDK;
@@ -205,7 +205,7 @@ namespace Csharp
             {
                 Code = Code.FromInline("exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"),
                 FunctionName = "testTargetFunction",
-                Runtime = Runtime.NODEJS_12_X,
+                Runtime = Runtime.NODEJS_18_X,
                 Handler = "index.handler"
             });
             string cronJobExample = "cron(50/1 6-7 ? * SUN-SAT *)";

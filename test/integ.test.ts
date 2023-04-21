@@ -10,7 +10,7 @@ test('simple test', () => {
   const targetLabmda = new Function(stack, 'targetFunction', {
     code: Code.fromInline('exports.handler = function(event, ctx, cb) { return cb(null, "hi"); })'),
     functionName: 'testTargetFunction',
-    runtime: Runtime.NODEJS_12_X,
+    runtime: Runtime.NODEJS_18_X,
     handler: 'index.handler',
   });
 
@@ -39,7 +39,7 @@ test('simple test', () => {
     FunctionName: 'lambda-subminute-iterator',
     Handler: 'index.lambdaHandler',
     MemorySize: 128,
-    Runtime: 'nodejs14.x',
+    Runtime: 'nodejs18.x',
     Timeout: 58,
     TracingConfig: {
       Mode: 'Active',

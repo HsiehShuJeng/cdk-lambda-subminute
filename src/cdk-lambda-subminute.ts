@@ -117,7 +117,7 @@ export class IteratorLambda extends Construct {
       functionName: 'lambda-subminute-iterator',
       description: 'A function for breaking the limit of 1 minute with the CloudWatch Rules.',
       logRetention: RetentionDays.THREE_MONTHS,
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_18_X,
       entry: fs.existsSync(path.join(__dirname, 'resources/iterator/iterator_agent.ts')) ? path.join(__dirname, 'resources/iterator/iterator_agent.ts') : path.join(__dirname, 'resources/iterator/iterator_agent.js'),
       handler: 'lambdaHandler',
       environment: {

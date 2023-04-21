@@ -19,7 +19,7 @@ class PythonStack(cdk.Stack):
             code=Code.from_inline(
                 "exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"),
             function_name="testTargetFunction",
-            runtime=Runtime.NODEJS_12_X,
+            runtime=Runtime.NODEJS_18_X,
             handler="index.handler"
         )
         cron_job_example = "cron(10/1 4-5 ? * SUN-SAT *)"

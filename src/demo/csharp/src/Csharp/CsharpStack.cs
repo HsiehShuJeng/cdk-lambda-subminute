@@ -12,7 +12,7 @@ namespace Csharp
             {
                 Code = Code.FromInline("exports.handler = function(event, ctx, cb) { return cb(null, \"hi\"); })"),
                 FunctionName = "testTargetFunction",
-                Runtime = Runtime.NODEJS_12_X,
+                Runtime = Runtime.NODEJS_18_X,
                 Handler = "index.handler"
             });
             string cronJobExample = "cron(50/1 6-7 ? * SUN-SAT *)";
