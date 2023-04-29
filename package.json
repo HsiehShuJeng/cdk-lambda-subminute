@@ -57,7 +57,7 @@
     "jsii-docgen": "^1.8.110",
     "jsii-pacmak": "^1.80.0",
     "npm-check-updates": "^16",
-    "projen": "^0.71.29",
+    "projen": "^0.71.32",
     "source-map-support": "^0.5.21",
     "standard-version": "^9",
     "ts-jest": "^27",
@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.77.0",
-    "aws-sdk": "^2.1367.0",
+    "aws-sdk": "^2.1368.0",
     "constructs": "^10.0.5"
   },
   "bundledDependencies": [
