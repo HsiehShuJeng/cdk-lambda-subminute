@@ -105,8 +105,8 @@ $ mvn package
 .
 <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <cdk.version>2.76.0</cdk.version>
-      <constrcut.verion>2.0.128</constrcut.verion>
+      <cdk.version>2.87.0</cdk.version>
+      <constrcut.verion>2.0.201</constrcut.verion>
       <junit.version>5.7.1</junit.version>
 </properties>
  .
@@ -188,7 +188,7 @@ You could also refer to [here](https://github.com/HsiehShuJeng/cdk-lambda-submin
 ```bash
 $ cdk init --language csharp
 $ dotnet add src/Csharp package Amazon.CDK.AWS.Lambda
-$ dotnet add src/Csharp package Lambda.Subminute --version 2.0.128
+$ dotnet add src/Csharp package Lambda.Subminute --version 2.0.201
 ```
 ```cs
 using Amazon.CDK;
