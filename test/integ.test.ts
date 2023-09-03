@@ -46,7 +46,6 @@ test('simple test', () => {
     },
   },
   );
-  console.log(JSON.stringify(template.findResources('AWS::StepFunctions::StateMachine')), null, 4);
   template.hasResourceProperties('AWS::StepFunctions::StateMachine', Match.objectLike({
     DefinitionString:
     {
