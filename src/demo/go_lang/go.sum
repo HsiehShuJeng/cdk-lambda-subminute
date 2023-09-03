@@ -1,5 +1,5 @@
-github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2 v2.0.226 h1:tmdGxS8XkFlT+Cqp66WguP2jka4cks72CR3ySyDoSZI=
-github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2 v2.0.226/go.mod h1:HwfUXZdH2AXXzAafGjJ0nz9pcghCC4htMD+RHfiRcLo=
+github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2 v2.0.227 h1:eDcouSU7ObAi3x25AQuz098oKVdf0ln/wsXbrfeJJQE=
+github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2 v2.0.227/go.mod h1:RuFqHFZrhKElHHJbX4Vc/7UfI3bGidZsdSuattEGot4=
 github.com/Masterminds/semver/v3 v3.2.1 h1:RN9w6+7QoMeJVGyfmbcgs28Br8cvmnucEXnY0rYXWg0=
 github.com/Masterminds/semver/v3 v3.2.1/go.mod h1:qvl/7zhW3nngYb5+80sSMF+FG2BjYrf8m9wsX0PNOMQ=
 github.com/aws/aws-cdk-go/awscdk/v2 v2.94.0 h1:6qmcfYsqymrhfmb2WqrL2jC1uowhdJuyvkkAHJmkdT0=

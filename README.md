@@ -47,19 +47,20 @@ new TypescriptStack(app, 'TypescriptStack', {
 You could also refer to [here](https://github.com/HsiehShuJeng/cdk-lambda-subminute/tree/main/src/demo/python).   
 ```bash
 # upgrading related Python packages
-$ python -m ensurepip --upgrade
-$ python -m pip install --upgrade pip
-$ python -m pip install --upgrade virtualenv
+python -m ensurepip --upgrade
+python -m pip install --upgrade pip
+python -m pip install --upgrade virtualenv
 # initialize a CDK Python project
-$ cdk init --language python
+cdk init --language python
 # make packages installed locally instead of globally
-$ source .venv/bin/activate
-$ cat <<EOL > requirements.txt
-aws-cdk.core
-aws-cdk.aws-lambda
-cdk-lambda-subminute
+python -m virtualenv .venv
+source .venv/bin/activate
+cat <<EOL > requirements.txt
+aws-cdk-lib
+constructs>=10.0.0
+cdk-lambda-subminute>=2.0.227
 EOL
-$ python -m pip install -r requirements.txt
+$ python -m pip install --upgrade -r requirements.txt
 ```  
 ```python
 from aws_cdk import core as cdk
