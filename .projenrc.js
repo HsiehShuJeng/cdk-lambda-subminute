@@ -12,7 +12,7 @@ const project = new projen.awscdk.AwsCdkConstructLibrary({
     'scott.hsieh',
   ],
   description: 'A construct for deploying a Lambda function that can be invoked every time unit less than one minute.',
-  cdkVersion: '2.27.0',
+  cdkVersion: '2.94.0',
   majorVersion: 2,
   defaultReleaseBranch: 'main',
   name: 'cdk-lambda-subminute',
@@ -26,10 +26,6 @@ const project = new projen.awscdk.AwsCdkConstructLibrary({
     'constructs@^10.0.5',
     'esbuild',
     'source-map-support',
-  ],
-  peerDeps: [
-    'aws-cdk-lib',
-    'constructs@^10.0.5',
   ],
   eslint: true,
   depsUpgradeOptions: {
