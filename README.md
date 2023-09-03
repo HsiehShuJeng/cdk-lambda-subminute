@@ -230,6 +230,18 @@ namespace Csharp
 }
 ```
 
+## GO
+```bash
+# Initialize a new AWS CDK application in the current directory with the Go programming language
+cdk init app -l go
+# Add this custom CDK construct to your project
+go get github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2@v2.0.226
+# Ensure all dependencies are properly listed in the go.mod file and remove any unused ones
+go mod tidy
+# Upgrade all Go modules in your project to their latest minor or patch versions
+go get -u ./...
+```
+
 # Statemachine Diagram  
 ![image](https://raw.githubusercontent.com/HsiehShuJeng/cdk-lambda-subminute/main/images/statemachine_diagram.png)  
 
