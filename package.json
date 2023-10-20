@@ -58,7 +58,7 @@
     "jsii-pacmak": "^1.90.0",
     "jsii-rosetta": "1.x",
     "npm-check-updates": "^16",
-    "projen": "^0.75.2",
+    "projen": "^0.75.3",
     "source-map-support": "^0.5.21",
     "standard-version": "^9",
     "ts-jest": "^27",
@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.95.0",
-    "aws-sdk": "^2.1476.0",
+    "aws-sdk": "^2.1477.0",
     "constructs": "^10.0.5"
   },
   "bundledDependencies": [
