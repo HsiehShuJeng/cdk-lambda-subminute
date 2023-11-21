@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
     "aws-cdk-lib": "^2.95.0",
-    "esbuild": "^0.19.6",
+    "esbuild": "^0.19.7",
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.29.0",
@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.95.0",
-    "aws-sdk": "^2.1499.0",
+    "aws-sdk": "^2.1500.0",
     "constructs": "^10.0.5"
   },
   "bundledDependencies": [
