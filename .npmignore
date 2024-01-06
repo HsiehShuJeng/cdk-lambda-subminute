@@ -25,3 +25,4 @@ tsconfig.tsbuildinfo
 cdk.context.json
 yarn-error.log
 _temp
+/.gitattributes
