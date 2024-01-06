@@ -50,7 +50,6 @@ target/
 .settings
 .vscode/
 *.iml
-!/.projenrc.js
 /test-reports/
 junit.xml
 /coverage/
@@ -73,3 +72,4 @@ tsconfig.json
 cdk.context.json
 yarn-error.log
 _temp
+!/.projenrc.js
