@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "aws-cdk-lib": "^2.95.0",
-    "aws-sdk": "^2.1573.0",
+    "aws-sdk": "^2.1574.0",
     "constructs": "^10.0.5"
   },
   "bundledDependencies": [
