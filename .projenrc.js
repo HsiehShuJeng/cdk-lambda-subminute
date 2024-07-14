@@ -28,6 +28,7 @@ const project = new projen.awscdk.AwsCdkConstructLibrary({
     'source-map-support',
   ],
   eslint: true,
+  jsiiVersion: '5.4.x',
   depsUpgradeOptions: {
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],

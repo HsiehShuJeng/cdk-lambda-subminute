@@ -22,23 +22,26 @@ test('simple test', () => {
   template.resourceCountIs('AWS::StepFunctions::StateMachine', 1);
   template.resourceCountIs('AWS::Events::Rule', 1);
   template.hasResourceProperties('AWS::Lambda::Function', {
+    Code: {
+      S3Key: Match.stringLikeRegexp('\\.zip'),
+    },
+    Description: 'A function for breaking the limit of 1 minute with the CloudWatch Rules.',
+    Environment: {
+      Variables: {
+        TARGET_FN_NAME: {
+          Ref: 'targetFunctionFDF105E2',
+        },
+      },
+    },
+    FunctionName: 'lambda-subminute-iterator',
+    Handler: 'index.lambdaHandler',
+    MemorySize: 128,
     Role: {
       'Fn::GetAtt': [
         'LambdaSubminuteIteratorLambdaIteratorLambdaRole980819E8',
         'Arn',
       ],
     },
-    Environment: {
-      Variables: {
-        TARGET_FN_NAME: {
-          Ref: 'targetFunctionFDF105E2',
-        },
-        AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      },
-    },
-    FunctionName: 'lambda-subminute-iterator',
-    Handler: 'index.lambdaHandler',
-    MemorySize: 128,
     Runtime: 'nodejs18.x',
     Timeout: 58,
     TracingConfig: {

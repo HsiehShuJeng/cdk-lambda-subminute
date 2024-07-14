@@ -105,8 +105,8 @@ $ mvn package
 .
 <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <cdk.version>2.87.0</cdk.version>
-      <constrcut.verion>2.0.201</constrcut.verion>
+      <cdk.version>2.149.0</cdk.version>
+      <constrcut.verion>2.0.442</constrcut.verion>
       <junit.version>5.7.1</junit.version>
 </properties>
  .
@@ -188,7 +188,7 @@ You could also refer to [here](https://github.com/HsiehShuJeng/cdk-lambda-submin
 ```bash
 $ cdk init --language csharp
 $ dotnet add src/Csharp package Amazon.CDK.AWS.Lambda
-$ dotnet add src/Csharp package Lambda.Subminute --version 2.0.201
+$ dotnet add src/Csharp package Lambda.Subminute --version 2.0.442
 ```
 ```cs
 using Amazon.CDK;
@@ -235,7 +235,7 @@ namespace Csharp
 # Initialize a new AWS CDK application in the current directory with the Go programming language
 cdk init app -l go
 # Add this custom CDK construct to your project
-go get github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2@v2.0.226
+go get github.com/HsiehShuJeng/cdk-lambda-subminute-go/cdklambdasubminute/v2@v2.0.442
 # Ensure all dependencies are properly listed in the go.mod file and remove any unused ones
 go mod tidy
 # Upgrade all Go modules in your project to their latest minor or patch versions
